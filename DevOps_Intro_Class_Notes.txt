@@ -212,7 +212,7 @@ DevOps :::
 					
 				DevOps Approach ::
 				
-						Code the application Source and Commit/Save the changes to a source code Repository. 
+						Code the application Source and Commit/Save the changes to a source code Repository(github). 
 						
 					Using DevOps Automate 
 						Build the Code :
@@ -384,3 +384,104 @@ DevOps :::
 		www.github.com 		===> Remote git Repositories
 		
 		Repository - Collection of Folders and files. 
+		
+		Version Control System :
+		
+		What is Version Control System?
+		Types of VCS 
+		GIT
+		GIT File Work flow
+		GIT CLI Installation		
+		Working with GIT CLI Commands 
+		Branching Techinuqies 
+		Remote Repositories - Github
+		
+		
+		What is Version Control System?
+		
+		Continuous Developement ::
+		
+			Java_Web_Application_Project (Folder)
+				- src/main
+					s1.java
+					s2.java
+				- resource
+					index.html
+					
+			Workspace - d:/Java_Web_Application_Project
+				
+			index.html 
+			
+			<html>
+			--
+			-
+			-
+			-
+			---
+			-
+			</html>
+			
+			save index.html 
+			Test 
+			
+			<html>
+			--
+			-
+			-
+			-
+			---
+			dsfsd
+			fs
+			df
+			sd
+			fsdf
+			-
+			</html>
+			
+			save index.html 
+			
+			Define the versioning!
+			
+			Version Control System ::
+			
+			
+			save :
+			
+				index.html_v1.0		(tag,version_Number,commit_id)
+				index.html_v1.1		(tag,version_Number,commit_id)
+				index.html_v1.2		(tag,version_Number,commit_id)
+				index.html_v1.3		(tag,version_Number,commit_id)
+				index.html_v1.4		(tag,version_Number,commit_id)
+				
+					Version Control System :
+					
+						- It is used to version control the File Changes 
+						- It is used to track the changes 
+						
+			Types of VCS :::
+			
+			
+				1. Local VCS 
+				
+				2. Centralized VCS 
+				
+				3. Distributed VCS 
+							- GIT is one of the distributed VCS.
+							
+					GIT ::
+					
+						- GIT is the Open-Source Distributed VCS 
+						- It is used to Version Control and Track the Changes 
+						- It is used to perform Parallel Development using Branching.
+						
+		
+		Link to download and install git cli.
+				https://git-scm.com/downloads
+				
+		Install Visual Studio Code :
+				https://code.visualstudio.com/download
+
+
+Next :::
+		
+		Git File Workflow ::: 
