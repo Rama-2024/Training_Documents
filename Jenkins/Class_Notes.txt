@@ -1,0 +1,276 @@
+######################
+Day 4 - 24th Mar. 2024
+######################
+	
+	
+	Jenkins :::
+	
+		Build Orchestration Tool : 
+		
+		Jenkins is an open-source build orchestration tool:
+		
+		Jenkins Architecture ::
+		
+			Master & Slave Architecture :::
+			
+			Jenkins_Master - Node(VM) 	==> Install git, jdk, Jenkins
+													- It is used to create the Jenkins CICD Pipeline Projects/Jobs 
+													- It will schedule the Projects/Jobs to run in any Node(Master (or) Slave_Node)
+				
+				Jenkins_Slave1 - Node(VM)	Maven Build 
+				Jenkins_Slave2 - Node(VM)	Python Build
+				Jenkins_Slave3 - Node(VM)	.Net
+				Jenkins_Slave4 - Node(VM)	Angular 
+				Jenkins_Slave5 - Node(VM)	NodeJS					
+				
+			DevOps Approach ::
+			
+					Code the application Source and Commit/Save the changes to a source code Repository(github). 
+					
+				Using DevOps Automate 
+					Build the Code :
+					Compile 
+					Create Artifacts 
+					Perform Automated Unit Testing 						
+					Promote the Change to Test Environment for further Testing 
+					Notify the Testing Team thru emails 
+
+			
+			Jenkins :
+			
+			Developer's Perspective :
+				- Developers are the Consumers of Jenkins Jobs/Projects - run/cancel/check the status
+			
+			
+			DevOps Perspective :
+				- Jenkins Administrators 
+				
+			Roles & Responsibilities of DevOps Team here:
+			
+				- Installation of Jenkins
+				- Management of Plugins
+				- Tools Management 
+				- User Management 
+				- Security Management
+				- Credentials Management 
+				- System Configuration Management
+				- Jenkins Master-Slave Node Configuration & Management
+				- Create Jenkins CICD Pipeline Projects 
+				- Onboard Applications to Jenkins Pipelines 
+				- Trouble shoot the Issues 
+				- Take care of the backup and recovery
+				- Periodioc Upgrades of Jenkins and tools
+					
+			Environments :
+			
+				Non-Prod Environments 							Prod Environment
+				
+					- Dev Environment
+					- Build Environment 
+					- Test Environments	
+						- QA 
+						- UAT					====>				Production Environments 	
+
+			Installation of Jenkins ::: https://www.jenkins.io/doc/book/installing/
+			
+				Linux Operating System 
+					- Distributions 
+						Debian/Ubuntu		- apt / apt-get 
+						RHEL 				- yum 
+						Centos 				- yum 
+						Fedora 				- dnf 
+						
+					Package Managers -- Used to manage the linux application packages(install/Remove/Upgrade)
+				
+			Launch a VM in AWS Cloud Platform 
+				Ubuntu v20.04 - stable version of Ubuntu Machine.
+				
+			Connect to EC2 Instance :
+			
+				- EC2 Instance Connect 
+				- SSH Clients :
+					MobaXterm		https://mobaxterm.mobatek.net/download.html 
+					Putty
+				- Terminal 
+				
+		Cloud Account 
+		
+			Azure-AWS Cloud Platform ;
+				Free tier account 
+
+		Installation & Configuration of Jenkins :::
+		
+			AWS Cloud Platform :::
+			
+				Launch Ubuntu 20.04 (VM)
+						Install - git, jdk, jenkins 
+				Jenkins can be accessed using web browser!
+					open the default Jenkins port - 8080
+		
+			
+		https://www.jenkins.io/doc/book/installing/	
+
+Installation procedures :::
+
+	1. Install the pre-requisites 
+	2. Install the Actual tool 
+	3. Perform Post_Installation Activities
+	
+It is always recommended to use the official documentation to do the package management
+
+
+Install & Configure Jenkins Server :
+
+	- Refer to that tools/Service's Official Documentation.
+				https://www.jenkins.io/doc/book/installing/linux/
+
+1. Install the pre-requisites :::
+
+# Install Jdk:
+
+sudo -i 			
+sudo apt update -y
+sudo apt install openjdk-11-jre -y 						# previous version
+java -version						
+
+2. Install the Actual tool :::
+ 								
+#Install Jenkins:
+
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install jenkins -y
+
+systemctl enable jenkins 
+systemctl status jenkins 
+systemctl start jenkins 
+systemctl stop jenkins 
+systemctl restart jenkins 
+
+
+
+3. Perform Post_Installation Activities :::
+
+jenkins --version 
+
+systemctl status jenkins 
+
+Open web browser :
+
+http://<Public_IP_Address>:8080/
+
+E.g.: http://43.205.118.56:8080/
+
+cat /var/lib/jenkins/secrets/initialAdminPassword			
+			
+					
+		Management of Plugins
+			
+		Jenkins Projects/Jobs  :::
+	
+			- Free-Style Projects
+						- Manual Configurations
+			
+			
+			Handling Variables in Jenkins ::
+			
+				- Environment Variables
+				
+				- User Defined Variables
+				
+					x = 5 ;
+				
+			
+			- Pipeline Projects 	- based on scripts - Groovy Script 
+			
+					- Scripted Pipelines 
+					
+					- Declarative Pipelines 
+							Snippets Generator!
+				
+				Pipeline Stages :
+				
+							task1
+							task2 
+				Pipeline 
+					stages 
+						stage1 
+							step1
+							step2
+				
+				Alternative to Jenkins :
+				
+					gitlab-ci				*.yaml  - key:value - Declarative Scripting Languages
+					az pipelines 
+					aws code pipeline 
+				
+			Jenkins_Master - Node(VM) 	==> Install git, jdk, Jenkins			
+				Jenkins_Slave1 - Node(VM)	==> Install git, jdk, Maven
+			
+			- Establish Communication between Jenkins Master & Slave -- SSH Conn
+				Using Jenkins Node Configuration
+				In Slave Node, 
+					User Name
+					User Credentials 
+						private key and public key		# To perform key base authentication.
+					Host Name 
+					
+				SSH Authentication:
+					Password based Auth
+					Key Based Auth	: private key and public key	
+					Token based Auth 
+					Passwordless Auth
+				
+	
+			Maven Is a Build Tool :
+			
+				used to build Java Applications 
+				
+				Compile the code 
+				create artifacts 
+				perform unit testing 
+				
+				
+				- pom.xml :
+					- Defines the dependencies and plugins required to do the app build 
+				
+				- Goal :
+				
+					compile 		# Compile the code 
+					test 			# compile the code as well perform unit testing 
+					package 		# compile the code, perform unit testing and create artifacts(*.war)
+					clean			# Clean the target folder
+				
+
+pipeline {
+    agent any
+
+    stages {
+        stage('SCM_Checkout') {
+            steps {
+                echo 'Perform SCM Checkout'
+			        	git 'https://github.com/LoksaiETA/Java-mvn-app2'
+            }
+        }
+        stage('Application Build') {
+            steps {
+                echo 'Perform Application Build'
+                
+            }
+        }
+        stage('Deploy to QA Environment') {
+            steps {
+                echo 'Deploy'
+            }
+        }
+    }
+}
+
+
