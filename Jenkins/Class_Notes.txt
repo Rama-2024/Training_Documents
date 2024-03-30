@@ -273,4 +273,344 @@ pipeline {
     }
 }
 
+		
+######################
+Day 5 - 30th Mar. 2024
+######################		
+		
+
+			Jenkins_Master - Node(VM) 	==> Install git, jdk, Jenkins
+										- It is used to create the Jenkins CICD Pipeline Projects/Jobs 
+										- It will schedule the Projects/Jobs to run in any Node(Master (or) Slave_Node)
+				
+				Jenkins_Slave1 - Node(VM)	Maven Build 
+				Jenkins_Slave2 - Node(VM)	Python Build
+				Jenkins_Slave3 - Node(VM)	.Net
+				Jenkins_Slave4 - Node(VM)	Angular 
+				Jenkins_Slave5 - Node(VM)	NodeJS	
+				
+		Jenkins Slave Node Configuration
+		
+		Jenkins_Master (VM)			--> git,jdk,jenkins
+			Jenkins_Slave1 (VM)		--> git,jdk,maven 
+			
+			Integrate Jenkins_Slave1 with Jenkins_Master :::
+			
+				SSH Connection 
+					 User_Name
+					 User_Credentials 
+					 Host_Name
+			
+pipeline {
+    agent { label 'slave1' }
+
+    stages {
+        stage('SCM_Checkout') {
+            steps {
+                echo 'Perform SCM Checkout'
+				git 'https://github.com/LoksaiETA/Java-mvn-app2'
+            }
+        }
+        stage('Application Build') {
+            steps {
+                echo 'Perform Application Build'
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy to Tomcat_Server') {
+            steps {
+				script {
+				sshPublisher(publishers: [sshPublisherDesc(configName: 'SA-RD-Tomcat-Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/mvn-hello-world.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+			}
+            }
+        }
+    }
+}
+
+	Work with Deployment to Target Environment :::
+	
+		VM - Ubuntu v20.04
+		
+		Target/Hosted Server 
+		
+		Tomcat web application server 
+		
+		*.war 
+		
+		
+		Jenkins_Master (VM)			--> git,jdk,jenkins(8080)
+			Jenkins_Slave1 (VM)		--> git,jdk,maven 					*.war 
+			
+		Tomcat_Server (VM)			--> jdk, tomcat  - run in default port 8080
+		
+######################Install TOMCAT Application Server on Ubuntu :::
+
+sudo -i
+
+sudo apt update -y 
+
+
+sudo apt install openjdk-11-jre -y 
+java -version
+
+#edit /etc/profile & add JAVA_HOME
+
+#/usr/lib/jvm/java-11-openjdk-amd64/
+
+vi /etc/profile
+
+java-11-openjdk-amd64
+
+
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
+
+source /etc/profile
+
+Install Tomcat ::  https://tomcat.apache.org/download-80.cgi
+
+https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.100/bin/apache-tomcat-8.5.100.tar.gz
+
+https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.97/bin/apache-tomcat-8.5.97.tar.gz
+
+cd /opt
+wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.100/bin/apache-tomcat-8.5.100.tar.gz
+
+tar -xvzf /opt/apache-tomcat-8.5.100.tar.gz
+
+mv apache-tomcat-8.5.100 tomcat
+
+#Start Tomcat Server:
+#Goto:
+
+cd /opt/tomcat/bin
+./startup.sh
+
+###########################################
+
+#Add User : 
+
+
+
+useradd devopsadmin -s /bin/bash -m -d /home/devopsadmin
+
+su - devopsadmin
+
+#ssh-keygen
+
+#for Ubuntu ::
+ssh-keygen -t rsa -b 2048 -m PEM
+
+
+ls ~/.ssh 
+
+#You should see following two files:
+
+#id_rsa - private key
+#id_rsa.pub - public
+
+
+cat id_rsa.pub > authorized_keys
+
+chown -R devopsadmin /home/devopsadmin/.ssh
+chmod 600 /home/devopsadmin/.ssh/authorized_keys
+chmod 700 /home/devopsadmin/.ssh
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#make devopsadmin user as a owner to tomcat dir :
+
+chown -R devopsadmin /opt/tomcat
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	Deployment ???
+	
+		Copy the artifacts from the source server to the target server :
+		
+		
+			Source Server : Jenkins_Slave 								Target Server : Tomcat 
+			
+				Source File?												Target Path ?
+				
+					target/mvn-hello-world.war									/opt/tomcat/webapps/mvn-hello-world.war
+
+
+
+	Connect Tomcat Server with Jenkins :::
+	
+		Using Publish over SSH Plugin.
+		
+			Login to Jenkins Server 
+			
+			Install Publish over SSH Plugin & Restart Jenkins 
+			
+			Configure the Target Server in Jenkins Master using Publish over SSH Plugin.
+	
+pipeline {
+    agent { label 'slave1' }
+
+    stages {
+        stage('SCM_Checkout') {
+            steps {
+                echo 'Perform SCM Checkout'
+				git 'https://github.com/LoksaiETA/Java-mvn-app2'
+            }
+        }
+        stage('Application Build') {
+            steps {
+                echo 'Perform Application Build'
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy to Tomcat_Server') {
+            steps {
+				script {
+				sshPublisher(publishers: [sshPublisherDesc(configName: 'SA-RD-Tomcat-Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/mvn-hello-world.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+			}
+            }
+        }
+    }
+}
+
+
+	- Build Triggers :::
+	
+		- Used to Automate the Builds :
+		
+			- Build Periodic :			
+				- Used to schedule a job to run based on crontab definition:		https://crontab.guru/
+				
+					- Run the for every 5 mins. 
+					- 8AM 	- start the servers. 
+					- 10PM  - stop the servers.
+			
+			Non-Prod Environment (Only during business hrs.)					Prod Environment
+			
+				Dev 
+				Build 
+				QA 
+				UAT 																Prod Servers 
+			
+			
+			- Github Webhook :
+				
+				- Is used to trigger the build for each commit in the source code repository.
+				- During Continuous Deployment
+				
+				Webhook URL Configuration :
+				
+					http://20.197.33.227:8080/github-webhook/	
+					
+					<jenkins_url>/github-webhook/
+					
+					http://<public_ip_addr>:8080/github-webhook/
+					
+					http://65.2.63.88:8080/github-webhook/
+				
+			
+			- Poll SCM :
+			
+				- It trigger the jobs based on crontab only if there is any change pushed to the source code repo.
+				
+				Build cycle 
+				
+				Test cycle ????
+				
+				8AM	- 12PM	- 3PM 
+
+				DevOps Approach ::
+				
+						Code the application Source and Commit/Save the changes to a source code Repository(github). 
+						
+					Using DevOps Automate 
+						Build the Code :
+						Compile 
+						Create Artifacts 
+						Perform Automated Unit Testing 						
+						Promote the Change to Test Environment for further Testing 
+						Notify the Testing Team thru emails 
+
+						
+		Email Notifications ::::
+		
+		
+		
+SMTP Server :
+smtp.gmail.com
+
+SMTP Authentication
+
+SMTP Port :: 465
+
+Login to Gmail :::
+
+Click Manage Account Settings
+
+@Left side panel - select Security 
+
+MFA --> mobile#
+App Password = 16 bytes of App Password. vr
+What ? window
+Which Appln - email			
+		
+Post Build Action in the Jenkins Pipeline Jobs ::
+
+	success 
+	failure
+	unstable 
+
+
+
+pipeline {
+    agent { label 'slave1' }
+
+    stages {
+        stage('SCM_Checkout') {
+            steps {
+                echo 'Perform SCM Checkout'
+				git 'https://github.com/LoksaiETA/Java-mvn-app2'
+            }
+              post {
+                failure {
+                  sh "echo 'Send mail on failure'"
+					mail bcc: 'lo3@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'l3@gmail.com', from: '', replyTo: '', subject: 'SCM Checkout Failed', to: 'l3@gmail.com,lo3@gmail.com,l3@gmail.com'
+                }
+              }
+        }
+        stage('Application Build') {
+            steps {
+                echo 'Perform Application Build'
+                sh 'mvn clean package'
+            }
+              post {
+                failure {
+                  sh "echo 'Send mail on failure'"
+					mail bcc: 'l3@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'l3@gmail.com', from: '', replyTo: '', subject: 'Application Build Failed', to: 'l23@gmail.com,lo23@gmail.com,lok3@gmail.com'
+                }
+              }
+        }
+        stage('Deploy to QA_Tomcat_Server') {
+            steps {
+				script {
+				sshPublisher(publishers: [sshPublisherDesc(configName: 'SA-RD-Tomcat-Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'target/', sourceFiles: 'target/mvn-hello-world.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+			}
+            }
+              post {
+                success {
+                  sh "echo 'Send mail on successful deployment"
+					mail bcc: 'l3@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'lo3@gmail.com', from: '', replyTo: '', subject: 'Deployment is Successful', to: 'lo3@gmail.com,l23@gmail.com,loksaieta223@gmail.com'
+                }
+                failure {
+                  sh "echo 'Send mail on failure'"
+					mail bcc: 'lo23@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'lo3@gmail.com', from: '', replyTo: '', subject: 'Deployment is Failed', to: 'l3@gmail.com,l23@gmail.com,l23@gmail.com'
+                }
+                unstable {
+                  sh "echo 'Send mail on unstable'"
+					mail bcc: 'lo23@gmail.com', body: "${BUILD_URL} The Job Status", cc: 'lo3@gmail.com', from: '', replyTo: '', subject: 'Deployment is unstable', to: 'lo3@gmail.com,lo3@gmail.com,l23@gmail.com'
+                }
+              }
+			
+        }
+    }
+}
 
