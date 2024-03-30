@@ -1,0 +1,84 @@
+
+######################
+Day 5 - 30th Mar. 2024
+######################	
+
+	Configuration Management System using Ansible :::
+	
+	
+	Infra-Structure Management Team 
+	
+		Provisioning/Creating the servers 
+		
+		Configure the required tools and services 
+		
+		100 - Services
+		
+			- create 100 test servers 
+			
+			- dynamically create and config the test servers 
+			
+			
+		IAC Tools : Terraform(Provisioning/Creating) 
+					Ansible(Configuration Management)
+					
+	
+	Ansible :
+	
+		- Why we need Ansible ?
+		- Ansible Architecture
+		- Components of Ansible Architecture
+			- Inventory 
+			- Modules 
+			- Playbooks 
+			- Ansible Config files 
+		Ansible Misc. Features
+			- Adhoc Commands 
+			- Ansible Playbooks 
+		Ansible Roles 	
+		
+		
+		- Components of Ansible Architecture
+			- Inventory 
+				- Is used to maintain the Ansible Node details to connect
+			- Modules 
+				- It is a script written in python 
+				- These modules are injected in the target node for execution.
+				- I.e., Push Mechanism 
+			- Playbooks 
+				- Written using yaml
+				- Defines the series of tasks or modules to be executed in target nodes
+				- Should be reusable
+			- Ansible Adhoc Commands 
+				- It is used to execute a module in the target environment
+				- It cannot be reusable 			
+			- Ansible Config files 
+				- Used to maintain the default properties of Ansible Controller.
+				
+		
+		Eg> Adhoc Command
+		
+			- Install git in the target nodes :
+			
+			
+		Eg> Playbook 
+		
+			Build_Server 
+			
+			- Install git 
+			- Install jdk
+			- Install Maven 
+
+			Tomcat_Server 
+			
+			- Install jdk 
+			- Install Tomcat 
+			- Start Tomcat 
+			
+			
+	Installation and Configuration of Ansible Controller and Nodes :::
+	
+		https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html
+		
+		
+		python is a pre-requisite!
