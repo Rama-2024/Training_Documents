@@ -1,0 +1,82 @@
+
+######################
+Day 5 - 30th Mar. 2024
+######################	
+
+Terraform - IAC Tool.
+
+			IAC Tools : Terraform(Provisioning/Creating)
+			
+			
+
+	CICD Pipeline ::
+	
+		SCM_Checkout 
+		Build 
+		Deploy to Tomcat_Server
+		
+	Hotfix changes : 
+	
+		Test these changes 
+		
+		Terraform 
+		
+		
+	CICD Pipeline ::
+	
+		SCM_Checkout 
+		Build 
+		Provisioning Tomcat_Server (Terraform)
+		Configure Tomcat_Server (Ansible)
+		Deploy to Tomcat_Server
+		
+	Terraform Architecture
+	
+	Terraform Providers 
+	
+	Install and work with Terraform 
+
+		
+	
+		- Local Windows 
+		
+		- Visual Studio Code to write terraform scripts using HCL 
+		
+	
+		Working with Terraform ::
+		
+			- Identify the scope of Infra-Structure
+			- Write Terraform Script as per Scope 
+			- Terraform Init - Initialize Terraform Providers 
+			- Terraform Plan - Preview the Resource Definitions
+			- Terraform Apply - To Apply the changes in target environment.
+			
+		Terraform State - statefile
+		
+		Install Terraform 
+		Install Visual Studio Code 
+			https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+			
+			https://developer.hashicorp.com/terraform/install
+			
+			select amd64 for windows
+			download zip file 
+			extract zip file 
+			Create Environment Variables / Set path in windows machine
+			
+		https://code.visualstudio.com/download
+		
+		install Hashicorp Terraform Extention 
+		
+		Create a project in VSCode 
+		
+		
+		Create AWS Access Token 
+		
+		Using Terraform :
+		
+			- Create/add Resource		+ 
+			
+			- Modify/update Resource	~
+			
+			- Delete/Destroy			-
