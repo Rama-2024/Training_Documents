@@ -82,3 +82,28 @@ Day 5 - 30th Mar. 2024
 		
 		
 		python is a pre-requisite!
+		
+######################
+Day 5 - 30th Mar. 2024
+######################	
+
+		- Register and set facts
+		
+		- Handlers 
+
+		- Loops 
+		
+		- Ansible Roles 
+		
+		
+Summary :
+	Ansible Architecture
+	
+	Inventory
+	Modules 
+	Adhoc Commands 
+	Playbooks 
+	Variables 
+	Handlers 
+	Ansible Roles 
+	
