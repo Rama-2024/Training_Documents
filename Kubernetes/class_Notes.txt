@@ -175,3 +175,188 @@ kube-proxy – a proxy service that runs on each worker node to deal with indiv
 		- Volumes
 			- Hostpath volume 
 
+
+#######################
+Day 9 - 13th Apr. 2024
+#######################
+
+		- Pods
+		- Namespaces 
+		- kubectl		# Is a command line utility, to interact with kubernetes
+		- kubeadm 
+		- Deployment Controller object 
+		- Services 
+			- Node-Port 
+			- Cluster-IP 
+			- Load Balancer 
+		- Volumes
+			- Hostpath volume 
+
+	
+	- Deployment Controller object 
+	
+		- Deploy the pods 
+		- Create replicaset to replicate the pods 
+		- Upgrade the pods 
+		- rollback the upgrade 
+		- Scale-Up 
+		- Scale-Down
+		
+		- Deployment Object
+		- Replicaset 
+		- Relicas of Pods 
+		
+		
+		This is to ensure high availability of applications running in the pods
+		
+		Deployment Strategy:
+		
+			Kubernetes Deployment Controller Object, byt default uses:
+				Rolling-Update Strategy for deployment of upgrade.
+					- It is used to upgrade the pod one after the other.
+							
+							
+				Launch - 10000 users to access their website simultaneously.
+				
+				1000 instances of pods 
+				
+				50000 ?
+				
+				
+				
+				
+		
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx-app
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:							# used in the Selector to refer the template
+        app: nginx-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:stable-alpine-slim
+        ports:
+        - containerPort: 80
+  selector:								# used by the Deployment Object to refer the template
+    matchLabels:
+      app: nginx-app
+
+
+
+	Replicaset 	-> It is used to run a specific number of pods at any point of time.
+
+	- Services 
+		- Node-Port 
+		- Cluster-IP 
+		- Load Balancer 	
+		
+	Igress Controller ::	Are introduced to reduce the number of Load Balancer. As Load Balancers are costly entity, we define Load Balancer at the Application Level. NOT at each service Level. 
+	
+		Simple routing 			- Static Web Page. - www.loksai.blogsite
+		
+		Host based routing										Path based routing 
+		
+		
+		
+			www.google.com											www.gmail.com
+		
+			https://drive.google.com/								www.gmail.com/inbox							
+		
+			https://translate.google.com/							www.gmail.com/sent
+			
+			https://mail.google.com/
+			
+			
+
+	Cluster-IP Service :::
+	
+	
+	Kubernetes - 
+	
+		Kubernetes: Developer/Admin/Securityadmin -
+		
+	Kubernetes Volumes :::
+	
+		Presistant data
+		
+		Docker volumes : 
+		
+		HostPath Volume :
+			 - it same as like docker volume 
+			 
+			 Created a vol in a specific host machine
+
+			 mounted tht volume to the container vol during exec.
+			 
+			 
+			 
+		KMaster:			POD - deploy
+		
+			WN1
+			WN2
+			WN3
+			 
+			 
+		- Namespaces 	:::
+		
+		What is Namespace in Kubernetes??
+		
+			- It is a logical partitioning of Kubernetes Cluster.
+			
+			Created based on Teams / Environments
+			
+		Non-Prod:
+		
+			Kubernetes_Master
+				Kubernetes_WorkerNode1,2,3,4,5
+				
+			Developer - Deploy a pod 
+				dev namespace
+				qa namespace
+				uat namespace
+
+
+		Prod: 24/7 availability
+		
+		Kubernetes_Master
+			Kubernetes_WorkerNode1,2,3,4,5
+			
+		Blue Green Deployment Strategy ?
+		
+		Production Server ::: LIVE 
+		
+			myweb_app_v1.10 ==> LIVE 						# Active Server		- Down this server
+			
+			Minor Releases
+			
+			Major Releases 
+			
+			Replica of Prod Server ==> 
+			
+			Deploy the Major Release => mywebapp_v2.0		# Passive Server  --> Convert this as LIVE Server 
+			
+			
+		Prod: 24/7 availability
+		
+		Kubernetes_Master
+			Kubernetes_WorkerNode1,2,3,4,5		
+			
+			
+				Namespace : Active: myweb_app_v1.10 ==> LIVE - delete Ns
+				
+				Namespace : NextGen-v1: mywebapp_v2.0 ==> LIVE
+
+Next:
+
+	Fundamentals of Prometheus/Grafana 
+			
+	CICD - Demo
+	
+	
