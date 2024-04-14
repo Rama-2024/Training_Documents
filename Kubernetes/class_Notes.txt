@@ -360,3 +360,114 @@ Next:
 	CICD - Demo
 	
 	
+#######################
+Day 10 - 14th Apr. 2024
+#######################	
+	
+	
+	Continuous Monitoring ::::
+	
+		Infra-Structure
+			- Servers,Networking,DBase_Server,Storage 
+			
+			Production Environments should be continuously monitored to ensure high availability and zero downtime 
+			
+			Production Support / Production Monitoring Team :
+			
+			Prometheus/Grafana/Nagios/Splunk/Dynatrace,..........
+			
+			CPU Utilization 
+			Memory Utilization
+			Traffic 
+			
+			Threshold limit --> 80% 
+			EMail/slack/MS Team Alert
+			
+			
+		
+		Applications Monitoring :
+			
+			AppDynamics / DataDog
+			
+			
+		Working with Monitoring Tools:
+		
+			- Architecture of Monitoring Tools 
+			
+			- Components of Architecture
+			
+				Monitoring Server 
+					Prometheus Service 
+					Retrieval Component 
+					Time_Series Database 
+					PromQL - Prom Query Language				===>				Grafana (Visualization Tool)
+			
+			- Node Exporter - Agent 
+			
+		Hybrid Environment ::
+		
+			- On-Premises 
+			- Cloud - Multi-cloud 
+				AWS
+				AZURE
+				GCP 
+			
+
+		Prometheus/AWS Cloud Watch / Azure Monitor can be considered as Data Source to Grafana.
+			
+			- Define Process
+			
+			
+			
+			
+	CICD - Demo :::
+	
+	
+	DevOps Team: 
+	
+		- Onboard Applications to DevOps CICD Process.
+		
+		
+	Jenkins Module ???
+	
+		- CICD Pipeline :
+		
+			- SCM_Checkout 
+			- Application Build 									*.war
+			- Deploy to Tomcat_Server(Target Server - QA/UAT/PROD)
+			
+	
+	- Define Infra-Structure :
+	
+		Jenkins_Master				==> Create CICD Pipeline & Schedule to run in Slave Node
+			Jenkins_Slave 			==> Perform Actual Build
+		Kubernetes_Master			==> Deploy the pods in target nodes.
+			Kubernetes_WorkerNode1
+			Kubernetes_WorkerNode2
+	
+		
+	- Install all the required tools :
+	
+		Jenkins_Master				==>	git, jdk, jenkins								
+			Build_Server 			==> git, jdk, maven, Docker-CE (Build Application and Container Image)
+		Kubernetes_Master						
+			Kubernetes_WorkerNode1
+			Kubernetes_WorkerNode2	
+			
+			
+	- CICD Pipeline Stages :::
+	
+			- SCM_Checkout 
+			- Application Build 			pom.xml 
+			- Build Application Image 		Dockerfile
+			- Login to Dockerhub 
+			- Publish the Image to Dockerhub Registry
+			- Deploy to Kubernetes Cluster 
+	
+	
+	- Jenkins_SlaveNode Configuration 
+	- Configure the Credentials 		- Dockerhub account
+	
+
+			
+			
